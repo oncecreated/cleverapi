@@ -44,14 +44,15 @@ def print_winners(event):
 ```
 
 Список доступных декораторов:
-| Декоратор     | Тип события   | Описание|
-| ------------- |:-------------:| -----:|
-| `comment_handler`      | `video_comment_new` | Событие комментария к игровой трансляции |
-| `question_handler`      | `sq_question` | Событие новго вопроса |
-| `friend_answer_handler`      | `sq_friend_answer` | Событие ответа друга пользователя |
-| `right_answer_handler`      | `sq_question_answers_right` | Событие результата ответа на вопрос |
-| `end_game_handler`      | `sq_ed_game` | Событие окончания викторины |
-| `game_winners_handler`      | `sq_game_winners` | Событие списка победивших игроков |
-| `all_events_handler`      | - | Дополнительный декоратор для получения всех событий пришедших с LongPoll |
-| `last_time_answer`      | `sq_question` | Дополнительный декоратор, вызываемый в последнее возможное время ответа на вопрос (может быть полезно, когда нужно ответить не сразу после получения вопроса) |
+
+|Декоратор | Тип события | Описание|
+|---|---|---|
+| `comment_handler`| `video_comment_new`|Событие комментария к игровой трансляции|
+| `question_handler`|`sq_question`|Событие новго вопроса|
+| `friend_answer_handler`|`sq_friend_answer`|Событие ответа друга пользователя|
+| `right_answer_handler`|`sq_question_answers_right`|Событие результата ответа на вопрос|
+| `end_game_handler`|`sq_ed_game`|Событие окончания викторины|
+| `game_winners_handler`| `sq_game_winners` |Событие списка победивших игроков |
+| `all_events_handler`|-|Дополнительный декоратор для получения всех событий пришедших с LongPoll |
+| `last_time_answer`|`sq_question`|Дополнительный декоратор, вызываемый в последнее возможное время ответа на вопрос (может быть полезно, когда нужно ответить не сразу после получения вопроса) |
 
