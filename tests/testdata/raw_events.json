@@ -1,0 +1,4 @@
+[
+    "{\"type\":\"video_comment_new\",\"owner_id\":-162894513,\"video_id\":456239419,\"comment\":{\"id\":0,\"from_id\":0,\"date\":0,\"text\":\"a\"},\"user\":{\"id\":0,\"photo_50\":\"\",\"photo_100\":\"\",\"first_name\":\"name\",\"last_name\":\"k\",\"sex\":1},\"version\":2}<!>0",
+    "{\"type\":\"video_comment_new\",\"owner_id\":-162894513,\"video_id\":456239419,\"comment\":{\"id\":0,\"from_id\":0,\"date\":0,\"text\":\"k\"},\"user\":{\"id\":0,\"photo_50\":\"\",\"photo_100\":\"\",\"first_name\":\"a\",\"last_name\":\"m\",\"sex\":2},\"version\":2}<!>0"
+]
