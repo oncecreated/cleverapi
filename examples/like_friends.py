@@ -49,7 +49,7 @@ def give_answer(event):
 @lp.right_answer_handler()
 def give_actions(event):
     question = event["question"]
-    # если ответ совпал с правильным вызваем событие награды
+    # если ответ совпал с правильным вызываем событие награды
     if question["right_answer_id"] == last_answer:
         api.send_action_answer_correct()
 
