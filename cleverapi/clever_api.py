@@ -16,13 +16,13 @@ class CleverApi():
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "Клевер/2.1.1 (Redmi Note 3; "
-            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)"
+            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)".encode("utf-8")
         })
 
     def request(self, method, payload: dict):
         payload["access_token"] = self.access_token
         payload["v"] = self.api_verison
-        content = requests.post("https://api.vk.com/method/{}"
+        content = self.session.post("https://api.vk.com/method/{}"
                                 .format(method), data=payload).json()
 
         if "error" in content:

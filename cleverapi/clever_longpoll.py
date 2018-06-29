@@ -109,9 +109,10 @@ class CleverLongPoll():
             self.notify_hadlers(event, self.handlers["__all__"])
 
         if event_type == "sq_question":
-            notify_later = Timer(10, self.notify_hadlers,
-                      (event, self.handlers["last_time_answer"]))
-            notify_later.start()
+            if "last_time_answer" in self.handlers:
+                notify_later = Timer(10, self.notify_hadlers,
+                                     (event, self.handlers["last_time_answer"]))
+                notify_later.start()
 
         if event_type == "sq_ed_game":
             self.clear_game_state()
