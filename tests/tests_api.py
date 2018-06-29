@@ -27,6 +27,6 @@ def test_hash_answer(api):
 
 def test_send_answer_with_zero_game_id(api):
     with pytest.raises(Exception) as exception:
-        api.send_answer(0, 1, 1)
+        api.send_answer(True, 0, 1, 1)
 
     assert "game_id must be non-zero" in str(exception.value)
