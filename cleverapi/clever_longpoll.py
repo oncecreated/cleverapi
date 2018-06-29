@@ -4,8 +4,6 @@ import urllib.parse
 from collections import OrderedDict
 from threading import Timer
 
-import requests
-
 from .clever_api import CleverApi
 from .exceptions import LongPollException
 
@@ -20,7 +18,7 @@ class CleverLongPoll():
     def get_events(self):
         data = urllib.parse.urlencode(self.parameters)
         url = "{}?{}".format(self.endpoint, data)
-        content = requests.post(url).text
+        content = self.api.session.post(url).text
         response = json.loads(content)
 
         if "failed" in response:

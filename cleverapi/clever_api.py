@@ -4,13 +4,20 @@ import uuid
 
 import requests
 
+
 class CleverApi():
-    def __init__(self, access_token, verison = "5.73"):
+    def __init__(self, access_token, verison="5.73"):
         self.access_token = access_token
         self.api_verison = verison
 
         self.device_id = uuid.uuid4().hex[:16]
         self.user_id = None
+
+        self.session = requests.Session()
+        self.session.headers.update({
+            "User-Agent": "Клевер/2.1.1 (Redmi Note 3; "
+            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)"
+        })
 
     def request(self, method, payload: dict):
         payload["access_token"] = self.access_token
@@ -91,7 +98,7 @@ class CleverApi():
             raise Exception("game_id must be non-zero")
 
         if not self.user_id:
-            self.__resolve_user_id()        
+            self.__resolve_user_id()
 
         hash = self.get_hash([game_id, question_id])
         payload = {
