@@ -105,7 +105,8 @@ class CleverLongPoll():
 
         if event_type in self.handlers:
             self.notify_hadlers(event, self.handlers[event_type])
-        elif "__all__" in self.handlers:
+        
+        if "__all__" in self.handlers:
             self.notify_hadlers(event, self.handlers["__all__"])
 
         if event_type == "sq_question":
