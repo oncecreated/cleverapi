@@ -93,7 +93,7 @@ class CleverApi():
     def send_action_aliexpress_auth(self):
         return self.send_action(8)
 
-    def send_answer(self, game_id, answer_id, question_id):
+    def send_answer(self, coins_answer, game_id, answer_id, question_id):
         if game_id == 0:
             raise Exception("game_id must be non-zero")
 
@@ -106,7 +106,9 @@ class CleverApi():
             "question_id": question_id,
             "device_id": self.device_id,
             "hash": hash,
-            "coins_answer": True
         }
+
+        if coins_answer is True:
+            payload["coins_answer"] = True
 
         return self.request("streamQuiz.sendAnswer", payload)
