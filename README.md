@@ -14,6 +14,7 @@
     - [sq_ed_game](#sq_ed_game)
     - [sq_question_answers_right](#sq_question_answers_right)
     - [video_comment_new](#video_comment_new)
+- [Примеры](#Примеры)
 
 ## Установка
 Протестирована работа с Python 3.6.
@@ -268,3 +269,6 @@ api.send_answer(coins_answer, game_id, answer_id, question_id)
    "version":2
 }
 ```
+
+## Примеры
+[like_frinds.py](https://github.com/oncecreated/cleverapi/blob/master/examples/like_friends.py) - использование бибилиотеки для создание бота, который выбирает наиболее популярный ответ у друзей
