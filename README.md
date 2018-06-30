@@ -1,6 +1,20 @@
 # **Clever API**
 Библиотека созданная для удобного взаимодействия с API мобильного приложения Клевер, разрабатываемого во ВКонтакте.
 
+## Навигация
+- [Установка](#Установка)
+- [Использование](#Использование)
+- [Обработчики](#Обработчики)
+- [Действия](#Действия)
+- [Отправка ответа](#Отправка-ответа)
+- [События](#События)
+    - [sq_game_winners](#sq_game_winners)
+    - [sq_friend_answer](#sq_friend_answer)
+    - [sq_question](#sq_question)
+    - [sq_ed_game](#sq_ed_game)
+    - [sq_question_answers_right](#sq_question_answers_right)
+    - [video_comment_new](#video_comment_new)
+
 ## Установка
 Протестирована работа с Python 3.6.
 
