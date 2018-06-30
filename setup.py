@@ -1,9 +1,22 @@
 #!/usr/bin/env python
-from setuptools import setup
+from setuptools import setup, find_packages
 
-setup(name='cleverapi',
-      version='0.1',
-      description='Python Clever Api',
-      packages=['cleverapi'],
-      install_requires=['requests'],
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setup(
+    name="cleverapi",
+    version="0.1",
+    author="Oncecreated",
+    description="Python Clever Api",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/oncecreated/cleverapi",
+    packages=find_packages(),
+    install_requires=['requests'],
+    classifiers=(
+        "Programming Language :: Python :: 3.6",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    )
 )
