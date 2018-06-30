@@ -35,7 +35,7 @@ $ python setup.py install
 Пользоваться библиотекой очень легко. Например, для простого вывода текста вопроса из онлайн викторины потребуется всего несколько строчек кода:
 
 ```python
-import cleverapi
+from cleverapi import CleverApi, CleverLongPoll
 
 api = CleverApi("TOKEN")
 lp = CleverLongPoll(api)
