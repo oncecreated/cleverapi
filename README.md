@@ -43,6 +43,8 @@ def print_winners(event):
     print(event)
 ```
 
+У функции после декоратора должен быть единственный параметр, отвечающий за информацию о событии.
+
 Список доступных декораторов:
 
 |Декоратор | Тип события | Описание|
@@ -85,3 +87,170 @@ api.send_answer(coins_answer, game_id, answer_id, question_id)
 Стоит остановиться на двух параметрах этого метода:
 - `coins_answer` (`bool`) - Передавайте True если играете на клеверсы, передавайте значение False, если вы продолжаете играть на деньги. *Осторожно, если вы передадите значение False когда уже выбыли из игры ваш ответ не будет засчитан*
 - `game_id` (`int`) - идентификатор текущей игры, его можно получить из атрибута `game_id` класса `CleverLongPoll`
+
+## События
+Игровые события в формате JSON.
+
+### **sq_game_winners** 
+```json
+{  
+   "type":"sq_game_winners",
+   "owner_id":-162894513,
+   "video_id":456230000,
+   "users":[  
+      {  
+         "name":"Самира В.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Владислав П.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Варвара Д.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Анастасия Ф.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Тёма Б.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Евгений В.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Вячеслав З.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Дарья М.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      },
+      {  
+         "name":"Светлана С.",
+         "photo_url":"https://vk.com/images/camera_200.png?ava=1"
+      }
+   ],
+   "prize":0,
+   "winners_num":9,
+   "version":2
+}
+```
+
+### **sq_friend_answer** 
+```json
+{  
+   "type":"sq_friend_answer",
+   "game_id":200,
+   "user_id":100,
+   "answer_id":0,
+   "photo_url":"https://vk.com/images/camera_200.png?ava=1",
+   "is_live_enabled":true
+}
+```
+
+### **sq_question** 
+```json
+{  
+   "type":"sq_question",
+   "owner_id":-162894513,
+   "video_id":456239000,
+   "question":{  
+      "id":11,
+      "text":"Кто основал социальную сеть ВКонтакте?",
+      "answers":[  
+         {  
+            "id":0,
+            "text":"Николай Дуров"
+         },
+         {  
+            "id":1,
+            "text":"Павел Дуров"
+         },
+         {  
+            "id":2,
+            "text":"Илон Маск"
+         }
+      ],
+      "time":null,
+      "number":1
+   },
+   "version":2
+}
+```
+
+### **sq_ed_game**
+```json
+{  
+   "type":"sq_ed_game",
+   "owner_id":-162894513,
+   "video_id":456230000,
+   "version":2
+}
+```
+
+### **sq_question_answers_right**
+```json
+{  
+   "type":"sq_question_answers_right",
+   "owner_id":-162894513,
+   "video_id":456230000,
+   "question":{  
+      "text":"Кто основал социальную сеть ВКонтакте?",
+      "answers":[  
+         {  
+            "id":0,
+            "text":"Николай Дуров",
+            "users_answered":1584
+         },
+         {  
+            "id":1,
+            "text":"Павел Дуров",
+            "users_answered":389217
+         },
+         {  
+            "id":2,
+            "text":"Илон Маск",
+            "users_answered":389
+         }
+      ],
+      "right_answer_id":1,
+      "id":11,
+      "is_first":true,
+      "is_last":false,
+      "number":1,
+      "sent_time":1529600002,
+      "answer_set":true
+   },
+   "question_time":1529600000,
+   "version":2
+}
+```
+
+### **video_comment_new**
+```json
+{  
+   "type":"video_comment_new",
+   "owner_id":-162894513,
+   "video_id":456230000,
+   "comment":{  
+      "id":0,
+      "from_id":100,
+      "date":152960000,
+      "text":"мыши"
+   },
+   "user":{  
+      "id":100,
+      "photo_50":"https://vk.com/images/camera_200.png?ava=1",
+      "photo_100":"https://vk.com/images/camera_200.png?ava=1",
+      "first_name":"Павел",
+      "last_name":"Анисимов",
+      "sex":2
+   },
+   "version":2
+}
+```
