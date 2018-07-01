@@ -63,6 +63,15 @@ class CleverApi():
 
         return "{}#{}#{}".format(ids_hash, user_hash, device_hash)
 
+    def use_proxy(self, address):
+        self.session.proxies = {
+            "http": address,
+            "https": address
+        }
+
+    def remove_proxy(self):
+        self.session.proxies = dict()
+
     def send_action(self, action_id):
         if not self.user_id:
             self.__resolve_user_id()
