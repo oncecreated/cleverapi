@@ -22,6 +22,8 @@ class CleverApi():
     def request(self, method, payload: dict):
         payload["access_token"] = self.access_token
         payload["v"] = self.api_verison
+        payload["lang"] = "ru"
+        payload["https"] = 1
         content = self.session.post("https://api.vk.com/method/{}"
                                 .format(method), data=payload).json()
 
@@ -121,3 +123,10 @@ class CleverApi():
             payload["coins_answer"] = True
 
         return self.request("streamQuiz.sendAnswer", payload)
+
+    def get_gifts(self):
+        return self.request("execute.getGifts", dict())
+
+    def purchase_gitf(self, gift_id):
+        payload = {"gift_id": gift_id}
+        return self.request("streamQuiz.purchaseGift", payload)
