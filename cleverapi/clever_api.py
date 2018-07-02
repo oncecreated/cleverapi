@@ -130,3 +130,7 @@ class CleverApi():
     def purchase_gitf(self, gift_id):
         payload = {"gift_id": gift_id}
         return self.request("streamQuiz.purchaseGift", payload)
+
+    def use_extra_life(self):
+        return self.request("streamQuiz.useExtraLife", dict())
+        
