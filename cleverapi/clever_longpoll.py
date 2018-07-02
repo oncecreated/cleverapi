@@ -4,6 +4,8 @@ import urllib.parse
 from collections import OrderedDict
 from threading import Timer
 
+import requests
+
 from .clever_api import CleverApi
 from .exceptions import LongPollException
 
@@ -67,7 +69,7 @@ class CleverLongPoll():
 
                 retry_interval = .5
 
-            except ConnectionError:
+            except requests.ConnectionError:
                 time.sleep(retry_interval)
                 retry_interval *= 2
 
@@ -92,7 +94,7 @@ class CleverLongPoll():
 
                 retry_interval = .5
 
-            except ConnectionError:
+            except requests.ConnectionError:
                 time.sleep(retry_interval)
                 retry_interval *= 2
 
