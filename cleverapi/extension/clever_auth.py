@@ -7,6 +7,8 @@ class CleverAccount():
         self.email = email
         self.password = password
         self.session = requests.Session()
+        self.url_access_allowed = None
+        self.token = None
 
     def auth(self):
         csrf = self.__get_csrf()
@@ -44,12 +46,15 @@ class CleverAccount():
             self.url_access_allowed = match.group(1)
 
     def get_token(self):
+        if self.token is not None:
+            self.token
+
         if self.url_access_allowed is None:
             raise Exception("self.url_access_allowed is None")
 
         response = self.session.post(self.url_access_allowed)
-        token = response.url.split("#")[1].split("&")[0].split("=")[1]
-        return token
+        self.token = response.url.split("#")[1].split("&")[0].split("=")[1]
+        return self.token
 
 
 
