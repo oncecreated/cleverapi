@@ -35,14 +35,19 @@ class CleverAccount():
         payload["email"] = self.email
         payload["pass"] = self.password
 
-        self.session.post(url, data=payload)
+        response = self.session.post(url, data=payload).text
+
+        pattern = r'<form method="post" action="(.+?.)">'
+        match = re.search(pattern, response)
+        
+        if match is not None:
+            self.url_access_allowed = match.group(1)
 
     def get_token(self):
-        url = str("https://login.vk.com/?act=grant_access&client_id=6334949&"
-        "settings=860247&redirect_uri=https%3A%2F%2Foauth.vk.com%2Fblank.html&"
-        "response_type=token&group_ids=&token_type=0&v=5.73&state=&display=mobile&")
+        if self.url_access_allowed is None:
+            raise Exception("self.url_access_allowed is None")
 
-        response = self.session.post(url)
+        response = self.session.post(self.url_access_allowed)
         token = response.url.split("#")[1].split("&")[0].split("=")[1]
         return token
 
