@@ -22,7 +22,7 @@
 
 * Установка с помощью pip (пакетный менеджер Python):
 ```
-$ pip install cleverapi
+$ pip install cleverapi --upgrade
 ```
 * Установка из исходного кода (требуется git)
 ```
