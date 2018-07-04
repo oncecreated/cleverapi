@@ -2,7 +2,7 @@ import requests
 import re
 import urllib
 
-class CleverAccount():
+class CleverAuth():
     def __init__(self, email, password):
         self.email = email
         self.password = password
