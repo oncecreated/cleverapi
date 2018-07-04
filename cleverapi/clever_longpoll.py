@@ -81,6 +81,10 @@ class CleverLongPoll():
             game["video_owner_id"], game["video_id"])["url"]
 
         self.update_url(url)
+
+        if "__start_game" in self.handlers:
+            self.notify_hadlers(game, self.handlers["__start_game"]) 
+
         self.event_loop()
 
     def event_loop(self):
@@ -152,6 +156,9 @@ class CleverLongPoll():
 
     def end_game_handler(self):
         return self.custom_handler("sq_ed_game")
+
+    def start_game_handler(self):
+        return self.custom_handler("__start_game")
 
     def game_winners_handler(self):
         return self.custom_handler("sq_game_winners")
