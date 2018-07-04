@@ -1,1 +1,1 @@
-from .clever_auth import CleverAccount
+from .clever_auth import CleverAuth

@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cleverapi",
-    version="0.2.1",
+    version="0.2.3",
     author="Oncecreated",
     description="Python Clever Api",
     long_description=long_description,
