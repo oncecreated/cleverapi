@@ -5,7 +5,7 @@ import uuid
 import requests
 
 
-class CleverApi():
+class BaseCleverApi():
     def __init__(self, access_token, verison="5.73"):
         self.access_token = access_token
         self.api_verison = verison
@@ -16,21 +16,12 @@ class CleverApi():
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "Клевер/2.1.1 (Redmi Note 3; "
-            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)".encode("utf-8")
+            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)".encode(
+                "utf-8")
         })
 
     def request(self, method, payload: dict):
-        payload["access_token"] = self.access_token
-        payload["v"] = self.api_verison
-        payload["lang"] = "ru"
-        payload["https"] = 1
-        content = self.session.post("https://api.vk.com/method/{}"
-                                .format(method), data=payload).json()
-
-        if "error" in content:
-            raise Exception("api response has error: " + json.dumps(content))
-
-        return content["response"]
+        raise NotImplementedError()
 
     def get_long_poll(self, owner_id, video_id):
         payload = {"owner_id": owner_id, "video_id": video_id}
@@ -133,4 +124,19 @@ class CleverApi():
 
     def use_extra_life(self):
         return self.request("streamQuiz.useExtraLife", dict())
-        
+
+
+class CleverApi(BaseCleverApi):
+
+    def request(self, method, payload: dict):
+        payload["access_token"] = self.access_token
+        payload["v"] = self.api_verison
+        payload["lang"] = "ru"
+        payload["https"] = 1
+        content = self.session.post("https://api.vk.com/method/{}"
+                                    .format(method), data=payload).json()
+
+        if "error" in content:
+            raise Exception("api response has error: " + json.dumps(content))
+
+        return content["response"]
