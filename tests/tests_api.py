@@ -28,13 +28,13 @@ def test_get_start_data(base_api):
 
 
 def test_get_user(base_api):
-    method = base_api.get_user()
+    method, _ = base_api.get_user()
 
     assert method == "users.get"
 
 
 def test_get_gifts(base_api):
-    method = base_api.get_gifts()
+    method, _ = base_api.get_gifts()
 
     assert method == "execute.getGifts"
 
@@ -47,7 +47,7 @@ def test_purchase_gift(base_api):
 
 
 def test_use_extra_life(base_api):
-    method = base_api.use_extra_life()
+    method, _ = base_api.use_extra_life()
 
     assert method == "streamQuiz.useExtraLife"
 
