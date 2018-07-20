@@ -6,14 +6,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cleverapi",
-    version="0.2.3",
+    version="0.3.0",
     author="Oncecreated",
     description="Python Clever Api",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/oncecreated/cleverapi",
     packages=find_packages(),
-    install_requires=['requests'],
+    install_requires=['requests', "aiohttp"],
     classifiers=(
         "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
