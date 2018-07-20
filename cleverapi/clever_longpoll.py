@@ -133,11 +133,12 @@ class CleverLongPoll():
 
     def custom_handler(self, event_type):
 
-        def decorator(handler):
+        def decorator(func):
             if event_type in self.handlers:
-                self.handlers[event_type].append(handler)
+                self.handlers[event_type].append(func)
             else:
-                self.handlers[event_type] = [handler]
+                self.handlers[event_type] = [func]
+            return func
 
         return decorator
 
