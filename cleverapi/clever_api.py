@@ -3,6 +3,9 @@ import json
 import uuid
 
 import requests
+import aiohttp
+
+from .exceptions import ApiResponseError
 
 
 class BaseCleverApi():
@@ -13,12 +16,14 @@ class BaseCleverApi():
         self.device_id = uuid.uuid4().hex[:16]
         self.user_id = None
 
+    def fetch(self, method, data={}):
+        return method, data
+
     def get_longpoll(self, owner_id, video_id):
         data = {"owner_id": owner_id, "video_id": video_id}
-        return "video.getLongPollServer", data
+        return self.fetch("video.getLongPollServer", data)
 
     def get_start_data(self):
-
         data = {
             "build_ver": "40031",
             "need_leaderboard": "0",
@@ -26,11 +31,10 @@ class BaseCleverApi():
             "lang": "ru",
             "https": "1"
         }
-
-        return "execute.getStartData", data
+        return self.fetch("execute.getStartData", data)
 
     def get_user(self):
-        return "users.get"
+        return self.fetch("users.get")
 
     def get_hash(self, params: list):
         ids = ("".join(map(str, params)) + "3aUFMZGRCJ").encode("utf-8")
@@ -48,7 +52,7 @@ class BaseCleverApi():
         hash = self.get_hash([action_id])
         data = {"action_id": action_id, "hash": hash}
 
-        return "streamQuiz.trackAction", data
+        return self.fetch("streamQuiz.trackAction", data)
 
     def send_answer(self, coins_answer, game_id, answer_id, question_id):
         hash = self.get_hash([game_id, question_id])
@@ -63,17 +67,17 @@ class BaseCleverApi():
         if coins_answer is True:
             data["coins_answer"] = True
 
-        return "streamQuiz.sendAnswer", data
+        return self.fetch("streamQuiz.sendAnswer", data)
 
     def get_gifts(self):
-        return "execute.getGifts"
+        return self.fetch("execute.getGifts")
 
     def purchase_gift(self, gift_id):
         data = {"gift_id": gift_id}
-        return "streamQuiz.purchaseGift", data
+        return self.fetch("streamQuiz.purchaseGift", data)
 
     def use_extra_life(self):
-        return "streamQuiz.useExtraLife"
+        return self.fetch("streamQuiz.useExtraLife")
 
 
 class CleverApi(BaseCleverApi):
@@ -83,53 +87,49 @@ class CleverApi(BaseCleverApi):
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "Клевер/2.1.1 (Redmi Note 3; "
-            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)".encode("utf-8")
+            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)".encode(
+                "utf-8")
         })
 
-    def fetch(self, method, data=dict()):
+    def fetch(self, method, data={}):
         data.update({
             "access_token": self.access_token,
-            "v": self.api_version, 
+            "v": self.api_version,
             "lang": "ru",
             "https": 1
         })
 
         content = self.session.post("https://api.vk.com/method/{}"
                                     .format(method), data=data).json()
+        error = content.get("error")
 
-        if "error" in content:
-            raise Exception("api response has error: " + json.dumps(content))
+        if error:
+            raise ApiResponseError(json.dumps(content))
 
         return content["response"]
 
-    def get_longpoll(self, owner_id, video_id):
-        method, data = super().get_longpoll(owner_id, video_id)
-        return self.fetch(method, data)
 
-    def get_start_data(self):
-        method, data = super().get_start_data()
-        return self.fetch(method, data)
+class AsyncCleverApi(BaseCleverApi):
+    def __init__(self, access_token, connector, version="5.73"):
+        super().__init__(access_token, version=version)
 
-    def get_user(self):
-        method = super().get_user()
-        return self.fetch(method)
+        self.connector = connector
 
-    def send_action(self, action_id):
-        method, data = super().send_action(action_id)
-        return self.fetch(method, data)
+    async def fetch(self, method, data={}):
+        data.update({
+            "access_token": self.access_token,
+            "v": self.api_version,
+            "lang": "ru",
+            "https": 1
+        })
 
-    def send_answer(self, coins_answer, game_id, answer_id, question_id):
-        method, data = super().send_answer(coins_answer, game_id, answer_id, question_id)
-        return self.fetch(method, data)
+        async with self.connector.session.post("https://api.vk.com/method/{}"
+            .format(method), data=data) as response:
 
-    def get_gifts(self):
-        method = super().get_gifts()
-        return self.fetch(method)
+            content = await response.json()
+            error = content.get("error")
 
-    def purchase_gitf(self, gift_id):
-        method, data = super().purchase_gift(gift_id)
-        return self.fetch(method, data)
+            if error:
+                raise ApiResponseError(json.dumps(content))
 
-    def use_extra_life(self):
-        method = super().use_extra_life()
-        return self.fetch(method)
+            return content["response"]
