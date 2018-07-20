@@ -76,8 +76,7 @@ class CleverLongPoll():
     def __start_polling(self, game):
         self.is_in_game = True
         self.game_id = game["game_id"]
-
-        url = self.api.get_long_poll(
+        url = self.api.get_longpoll(
             game["video_owner_id"], game["video_id"])["url"]
 
         self.update_url(url)
