@@ -4,7 +4,7 @@ import time
 
 import requests
 
-from cleverapi import CleverApi, CleverLongPoll
+from cleverapi import CleverApi, CleverLongPoll, Action
 
 access_token = "TOKEN"
 api = CleverApi(access_token)
@@ -51,7 +51,7 @@ def give_actions(event):
     question = event["question"]
     # если ответ совпал с правильным вызываем действие награды
     if question["right_answer_id"] == last_answer:
-        api.send_action_answer_correct()
+        api.send_action(Action.ANSWER_CORRECT)
 
 
 lp.game_waiting()
