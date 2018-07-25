@@ -277,4 +277,4 @@ api.send_answer(coins_answer, game_id, answer_id, question_id)
 ```
 
 ## Примеры
-[like_frinds.py](https://github.com/oncecreated/cleverapi/blob/master/examples/like_friends.py) - использование бибилиотеки для создание бота, который выбирает наиболее популярный ответ у друзей
+[like_friends.py](https://github.com/oncecreated/cleverapi/blob/master/examples/like_friends.py) - использование библиотеки для создания бота, который выбирает наиболее популярный ответ у друзей
