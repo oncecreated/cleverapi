@@ -119,6 +119,8 @@ api.bump(lat, lon)
 - `lat` (`int`) - Широта
 - `lon` (`int`) - Долгота
 
+Передаются в виде градусов (xx.xxxxxx)
+
 Подробнее: https://ru.wikipedia.org/wiki/Географические_координаты
 
 ## События
