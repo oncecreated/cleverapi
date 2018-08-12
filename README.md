@@ -121,6 +121,8 @@ api.bump(lat, lon)
 
 Передаются в виде градусов (xx.xxxxxx)
 
+Внимание: За 1 бамп с 1 человеком дают 25 клеверсов, с 1 человеком можно бампится 1 раз в неделю. Лимит бампов в неделю: 1000 клеверсов, в месяц: 4000 клеверсов
+
 Подробнее: https://ru.wikipedia.org/wiki/Географические_координаты
 
 ## События
@@ -292,3 +294,4 @@ api.bump(lat, lon)
 
 ## Примеры
 [like_friends.py](https://github.com/oncecreated/cleverapi/blob/master/examples/like_friends.py) - использование библиотеки для создания бота, который выбирает наиболее популярный ответ у друзей
+[bump.py](https://github.com/oncecreated/cleverapi/blob/master/examples/bump.py) - использование библиотеки для бампа, который происходит в выбранных координатах
