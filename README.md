@@ -116,8 +116,8 @@ api.send_answer(coins_answer, game_id, answer_id, question_id)
 api.bump(lat, lon)
 ```
 Стоит остановиться на двух параметрах этого метода:
-- `lat` (`int`) - Широта
-- `lon` (`int`) - Долгота
+- `lat` (`string`) - Широта
+- `lon` (`string`) - Долгота
 
 Передаются в виде градусов (xx.xxxxxx)
 
