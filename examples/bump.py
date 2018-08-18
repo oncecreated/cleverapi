@@ -1,9 +1,3 @@
-import json
-import random
-import time
-
-import requests
-
 from cleverapi import CleverApi
 
 access_token = "TOKEN"
