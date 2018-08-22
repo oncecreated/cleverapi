@@ -47,7 +47,11 @@ class BaseCleverApi():
         device_hash = hashlib.md5(device).hexdigest()
 
         return "{}#{}#{}".format(ids_hash, user_hash, device_hash)
-
+    
+    def bump(self, lat, lon):
+        data = {"lat": lat, "lon": lon}
+        return self.fetch("execute.bump", data)
+    
     def send_action(self, action_id):
         hash = self.get_hash([action_id])
         data = {"action_id": action_id, "hash": hash}
@@ -86,8 +90,8 @@ class CleverApi(BaseCleverApi):
 
         self.session = requests.Session()
         self.session.headers.update({
-            "User-Agent": "Клевер/2.1.1 (Redmi Note 3; "
-            "Android 23; Scale/3.00; VK SDK 1.6.8; com.vk.quiz)".encode(
+            "User-Agent": "Клевер/2.3.3 (Redmi Note 5; "
+            "Android 28; VK SDK 1.6.8; com.vk.quiz)".encode(
                 "utf-8")
         })
 
