@@ -87,6 +87,15 @@ class BaseCleverApi():
         data = {"lat": lat, "lon": lon}
         return self.fetch("execute.getNearbyUsers", data)
 
+    def comment(self, owner_id, video_id, message):
+        data = {
+            "owner_id": owner_id,
+            "video_id": video_id,
+            "message": message
+        }
+
+        return self.fetch("execute.createComment", data)
+
 
 class CleverApi(BaseCleverApi):
     def __init__(self, access_token, version="5.73"):
