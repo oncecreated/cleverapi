@@ -133,8 +133,10 @@ class CleverLongPoll():
             self.clear_game_state()
 
     def clear_game_state(self):
-        self.game_id = 0
         self.is_game = False
+        self.game_id = 0
+        self.owner_id = 0
+        self.video_id = 0
 
     def notify_hadlers(self, event, handlers):
         for handler in handlers:
