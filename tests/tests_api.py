@@ -102,4 +102,16 @@ def test_send_answer_for_coins(base_api_with_ids):
         '34f1d74e8991b6687a296f6a8c8c92a7'), coins_answer=True)
 
 
+@pytest.fixture
+def base_api_withput_ids():
+    api = BaseCleverApi(None)
+    return api
+
+
+def test_get_hash_without_user_id(base_api_withput_ids):
+    with pytest.raises(AttributeError):
+        base_api_withput_ids.get_hash(["0"])
+
+
+
 
