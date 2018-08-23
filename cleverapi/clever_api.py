@@ -37,6 +37,10 @@ class BaseCleverApi():
         return self.fetch("users.get")
 
     def get_hash(self, params: list):
+
+        if not self.user_id:
+            raise AttributeError("Hash can not be generated until CleverApi.user_id is None")
+
         ids = ("".join(map(str, params)) + "3aUFMZGRCJ").encode("utf-8")
         ids_hash = hashlib.md5(ids).hexdigest()
 
