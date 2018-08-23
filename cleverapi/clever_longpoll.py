@@ -17,6 +17,8 @@ class CleverLongPoll():
 
         self.is_game = False
         self.game_id = 0
+        self.owner_id = 0
+        self.video_id = 0
 
     def get_events(self):
         data = urllib.parse.urlencode(self.parameters)
