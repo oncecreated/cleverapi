@@ -14,7 +14,8 @@ class CleverLongPoll():
     def __init__(self, api: CleverApi):
         self.api = api
         self.handlers = {}
-        self.is_in_game = False
+
+        self.is_game = False
         self.game_id = 0
 
     def get_events(self):
@@ -60,6 +61,7 @@ class CleverLongPoll():
                 game_status = game["status"]
 
                 if game_status == "started":
+                    self.init_game_state(game)
                     self.__start_polling(game)
 
                 elif game_status == "planned":
@@ -73,23 +75,26 @@ class CleverLongPoll():
                 time.sleep(retry_interval)
                 retry_interval *= 2
 
-    def __start_polling(self, game):
-        self.is_in_game = True
+    def init_game_state(self, game):
+        self.is_game = True
         self.game_id = game["game_id"]
-        url = self.api.get_longpoll(
-            game["video_owner_id"], game["video_id"])["url"]
+        self.owner_id = game["video_owner_id"]
+        self.video_id = game["video_id"]
+
+    def __start_polling(self, game):
+        url = self.api.get_longpoll(self.owner_id, self.video_id)["url"]
 
         self.update_url(url)
 
         if "__start_game" in self.handlers:
-            self.notify_hadlers(game, self.handlers["__start_game"]) 
+            self.notify_hadlers(game, self.handlers["__start_game"])
 
         self.event_loop()
 
     def event_loop(self):
         retry_interval = .5
 
-        while self.is_in_game:
+        while self.is_game:
             try:
                 events = self.get_events()
                 for event in events:
@@ -110,7 +115,7 @@ class CleverLongPoll():
 
         if event_type in self.handlers:
             self.notify_hadlers(event, self.handlers[event_type])
-        
+
         if "__all__" in self.handlers:
             self.notify_hadlers(event, self.handlers["__all__"])
 
@@ -125,7 +130,7 @@ class CleverLongPoll():
 
     def clear_game_state(self):
         self.game_id = 0
-        self.is_in_game = False
+        self.is_game = False
 
     def notify_hadlers(self, event, handlers):
         for handler in handlers:

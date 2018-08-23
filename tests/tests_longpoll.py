@@ -21,28 +21,41 @@ def test_event_parsing(longpoll):
 
 
 def test_start_game_state(longpoll):
-    assert longpoll.is_in_game == False
+    assert longpoll.is_game == False
 
 
-def test_game_state_clear(longpoll):
-    longpoll.is_in_game = True
+def test_clear_game_state(longpoll):
+    longpoll.is_game = True
     longpoll.game_id = 123
 
     longpoll.clear_game_state()
 
-    assert longpoll.is_in_game == False
+    assert longpoll.is_game == False
     assert longpoll.game_id == 0
 
 
+def test_init_game_state(longpoll):
+    
+    with open("./testdata/game_object.json", "r") as file:
+        file_content = file.read()
+        game = json.loads(file_content)
+        longpoll.init_game_state(game)
+
+    assert longpoll.game_id == 103
+    assert longpoll.owner_id == 100
+    assert longpoll.video_id == 306
+    assert longpoll.is_game == True
+
+
 def test_end_polling(longpoll):
-    longpoll.is_in_game = True
+    longpoll.is_game = True
 
     with open("./testdata/end_game_event.json", "r") as file:
         file_content = file.read()
         end_game_event = json.loads(file_content)
         longpoll.process_event(end_game_event)
 
-    assert longpoll.is_in_game == False
+    assert longpoll.is_game == False
 
 
 def test_url_update(longpoll):
