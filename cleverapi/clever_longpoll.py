@@ -24,8 +24,10 @@ class CleverLongPoll():
         content = self.api.session.post(url).text
         response = json.loads(content)
 
-        if "failed" in response:
-            raise LongPollException("long poll response: " + content)
+        failed = response.get("failed")
+        
+        if failed:
+            raise LongPollException(content)
 
         # ts is longpoll request id
         # its change after each request
