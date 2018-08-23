@@ -83,6 +83,10 @@ class BaseCleverApi():
     def use_extra_life(self):
         return self.fetch("streamQuiz.useExtraLife")
 
+    def get_nearby_users(self, lat, lon):
+        data = {"lat": lat, "lon": lon}
+        return self.fetch("execute.getNearbyUsers", data)
+
 
 class CleverApi(BaseCleverApi):
     def __init__(self, access_token, version="5.73"):
