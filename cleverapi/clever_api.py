@@ -49,7 +49,7 @@ class BaseCleverApi():
         return "{}#{}#{}".format(ids_hash, user_hash, device_hash)
     
     def bump(self, lat, lon):
-        data = {"lat": lat, "lon": lon}
+        data = {"lat": lat, "lon": lon, "prod": 1, "func_v": 1}
         return self.fetch("execute.bump", data)
     
     def send_action(self, action_id):
