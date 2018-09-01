@@ -84,6 +84,12 @@ class BaseCleverApi():
         data = {"gift_id": gift_id}
         return self.fetch("streamQuiz.purchaseGift", data)
 
+    def get_daily_rewards(self):
+        return self.fetch("streamQuiz.getDailyRewardsData")
+    
+    def get_train_questions(self):
+        return self.fetch("streamQuiz.getTrainQuestions")
+    
     def use_extra_life(self):
         return self.fetch("streamQuiz.useExtraLife")
 
