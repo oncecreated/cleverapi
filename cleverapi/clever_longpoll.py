@@ -55,7 +55,7 @@ class CleverLongPoll():
         self.endpoint = "{}://{}{}".format(parsed.scheme,
                                            parsed.netloc, parsed.path)
 
-    def game_waiting(self):
+    def game_waiting(self, sleep_interval=60):
         retry_interval = .5
 
         while True:
@@ -69,9 +69,7 @@ class CleverLongPoll():
                     self.__start_polling(game)
 
                 elif game_status == "planned":
-                    current_time = int(response["server_time"])
-                    next_game_time = int(game["start_time"])
-                    time.sleep(next_game_time - current_time)
+                    time.sleep(sleep_interval)
 
                 retry_interval = .5
 
