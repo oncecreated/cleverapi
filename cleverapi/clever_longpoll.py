@@ -19,6 +19,7 @@ class CleverLongPoll():
         self.game_id = 0
         self.owner_id = 0
         self.video_id = 0
+        self.user_id = 0
 
     def get_events(self):
         data = urllib.parse.urlencode(self.parameters)
@@ -57,6 +58,8 @@ class CleverLongPoll():
 
     def game_waiting(self, sleep_interval=60):
         retry_interval = .5
+
+        self.user_id = self.api.get_user()[0].get("id")
 
         while True:
             try:
