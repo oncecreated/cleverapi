@@ -24,9 +24,9 @@ class BaseCleverApi():
 
     def get_start_data(self):
         data = {
-            "build_ver": "40031",
+            "build_ver": "503028",
             "need_leaderboard": "0",
-            "func_v": "4",
+            "func_v": "6",
             "lang": "ru",
             "https": "1"
         }
