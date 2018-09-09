@@ -6,6 +6,7 @@ import requests
 import aiohttp
 
 from .exceptions import ApiResponseError
+from .action import Action
 
 
 class BaseCleverApi():
@@ -50,9 +51,9 @@ class BaseCleverApi():
         data = {"lat": lat, "lon": lon, "prod": 1, "func_v": 1}
         return self.fetch("execute.bump", data)
     
-    def send_action(self, action_id, user_id):
-        hash = self.get_hash([action_id], user_id)
-        data = {"action_id": action_id, "hash": hash}
+    def send_action(self, action_id: Action, user_id):
+        hash = self.get_hash([action_id.value], user_id)
+        data = {"action_id": action_id.value, "hash": hash}
 
         return self.fetch("streamQuiz.trackAction", data)
 
