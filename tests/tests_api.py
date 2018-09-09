@@ -4,7 +4,7 @@ import json
 sys.path.append('../')
 
 import pytest
-from cleverapi import BaseCleverApi, CleverApi
+from cleverapi import BaseCleverApi, CleverApi, Action
 
 
 @pytest.fixture
@@ -81,7 +81,7 @@ def test_hash_answer(base_api_with_ids):
 def test_send_action(base_api_with_ids):
     user_api = "91670994"
 
-    method, data = base_api_with_ids.send_action(6, user_api)
+    method, data = base_api_with_ids.send_action(Action.COMMUNITY_NOTIFY, user_api)
 
     assert method == "streamQuiz.trackAction"
     assert data == dict(action_id=6, hash=str('8cc151519e41f560bf93b02278413875#'
