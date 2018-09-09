@@ -23,8 +23,8 @@ def test_get_start_data(base_api):
     method, data = base_api.get_start_data()
 
     assert method == "execute.getStartData"
-    assert data == dict(build_ver="40031", need_leaderboard="0", 
-                    func_v="4", lang="ru", https="1")
+    assert data == dict(build_ver="503028", need_leaderboard="0", 
+                    func_v="6", lang="ru", https="1")
 
 
 def test_get_user(base_api):
