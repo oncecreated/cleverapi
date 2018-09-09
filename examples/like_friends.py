@@ -38,7 +38,7 @@ def give_answer(event):
         answer = random.randint(0, 2)
 
     question_id = event["question"]["id"]
-    response = api.send_answer(True, lp.game_id, answer, question_id)
+    response = api.send_answer(True, lp.game_id, answer, question_id, lp.user_id)
 
     if response == 1:
         global last_answer
@@ -49,9 +49,10 @@ def give_answer(event):
 @lp.right_answer_handler()
 def give_actions(event):
     question = event["question"]
+    
     # если ответ совпал с правильным вызываем действие награды
     if question["right_answer_id"] == last_answer:
-        api.send_action(Action.ANSWER_CORRECT)
+        api.send_action(Action.ANSWER_CORRECT, lp.user_id)
 
 
 lp.game_waiting()
