@@ -12,9 +12,7 @@ class BaseCleverApi():
     def __init__(self, access_token, version="5.73"):
         self.access_token = access_token
         self.api_version = version
-
         self.device_id = uuid.uuid4().hex[:16]
-        self.user_id = None
 
     def fetch(self, method, data={}):
         return method, data
@@ -36,15 +34,11 @@ class BaseCleverApi():
     def get_user(self):
         return self.fetch("users.get")
 
-    def get_hash(self, params: list):
-
-        if not self.user_id:
-            raise AttributeError("Hash can not be generated until CleverApi.user_id is None")
-
-        ids = ("".join(map(str, params)) + "3aUFMZGRCJ").encode("utf-8")
+    def get_hash(self, additional: list, user_id):
+        ids = ("".join(map(str, additional)) + "3aUFMZGRCJ").encode("utf-8")
         ids_hash = hashlib.md5(ids).hexdigest()
 
-        user = str(int(self.user_id) ^ 202520).encode("utf-8")
+        user = str(int(user_id) ^ 202520).encode("utf-8")
         user_hash = hashlib.md5(user).hexdigest()
 
         device = (str(self.device_id) + "0MgLscD6R3").encode("utf-8")
@@ -56,14 +50,14 @@ class BaseCleverApi():
         data = {"lat": lat, "lon": lon, "prod": 1, "func_v": 1}
         return self.fetch("execute.bump", data)
     
-    def send_action(self, action_id):
-        hash = self.get_hash([action_id])
+    def send_action(self, action_id, user_id):
+        hash = self.get_hash([action_id], user_id)
         data = {"action_id": action_id, "hash": hash}
 
         return self.fetch("streamQuiz.trackAction", data)
 
-    def send_answer(self, coins_answer, game_id, answer_id, question_id):
-        hash = self.get_hash([game_id, question_id])
+    def send_answer(self, coins_answer, game_id, answer_id, question_id, user_id):
+        hash = self.get_hash([game_id, question_id], user_id)
 
         data = {
             "answer_id": answer_id,
