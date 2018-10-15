@@ -180,6 +180,7 @@ api.bump(lat, lon)
 ```
 
 ### **sq_friend_answer** 
+Необходимо купить их отображение за 299 клеверсов (id подарка 50)
 ```json
 {  
    "type":"sq_friend_answer",
