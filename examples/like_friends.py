@@ -12,6 +12,8 @@ lp = CleverLongPoll(api)
 
 friends_answers = [0, 0, 0]
 
+api.purchase_gift(50) # ответы друзей теперь платные
+
 # обработчик вопросов
 @lp.question_handler()
 def new_question(event):
