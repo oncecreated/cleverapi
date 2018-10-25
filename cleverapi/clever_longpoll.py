@@ -16,10 +16,10 @@ class CleverLongPoll():
         self.handlers = {}
 
         self.is_game = False
-        self.game_id = 0
-        self.owner_id = 0
-        self.video_id = 0
-        self.user_id = 0
+        self.game_id = None
+        self.owner_id = None
+        self.video_id = None
+        self.user_id = None
 
     def get_events(self):
         data = urllib.parse.urlencode(self.parameters)
@@ -29,7 +29,7 @@ class CleverLongPoll():
 
         failed = response.get("failed")
         
-        if failed:
+        if failed is not None:
             raise LongPollException(content)
 
         # ts is longpoll request id
@@ -135,9 +135,9 @@ class CleverLongPoll():
 
     def clear_game_state(self):
         self.is_game = False
-        self.game_id = 0
-        self.owner_id = 0
-        self.video_id = 0
+        self.game_id = None
+        self.owner_id = None
+        self.video_id = None
 
     def notify_hadlers(self, event, handlers):
         for handler in handlers:

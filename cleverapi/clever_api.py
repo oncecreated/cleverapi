@@ -14,8 +14,12 @@ class BaseCleverApi():
         self.access_token = access_token
         self.api_version = version
         self.device_id = uuid.uuid4().hex[:16]
+        self.api_host = "api.vk.com"
 
-    def fetch(self, method, data={}):
+    def fetch(self, method, data=None):
+        if data is None:
+            data = {}
+
         return method, data
 
     def get_longpoll(self, owner_id, video_id):
@@ -36,14 +40,14 @@ class BaseCleverApi():
         return self.fetch("users.get")
 
     def get_hash(self, additional: list, user_id):
-        ids = ("".join(map(str, additional)) + "3aUFMZGRCJ").encode("utf-8")
-        ids_hash = hashlib.md5(ids).hexdigest()
+        ids = "".join(map(str, additional)) + "3aUFMZGRCJ"
+        ids_hash = hashlib.md5(ids.encode()).hexdigest()
 
-        user = str(int(user_id) ^ 202520).encode("utf-8")
-        user_hash = hashlib.md5(user).hexdigest()
+        user = str(int(user_id) ^ 202520)
+        user_hash = hashlib.md5(user.encode()).hexdigest()
 
-        device = (str(self.device_id) + "0MgLscD6R3").encode("utf-8")
-        device_hash = hashlib.md5(device).hexdigest()
+        device = str(self.device_id) + "0MgLscD6R3"
+        device_hash = hashlib.md5(device.encode()).hexdigest()
 
         return "{}#{}#{}".format(ids_hash, user_hash, device_hash)
     
@@ -51,23 +55,23 @@ class BaseCleverApi():
         data = {"lat": lat, "lon": lon, "prod": 1, "func_v": 1}
         return self.fetch("execute.bump", data)
     
-    def send_action(self, action_id: Action, user_id):
-        hash = self.get_hash([action_id.value], user_id)
-        data = {"action_id": action_id.value, "hash": hash}
+    def send_action(self, *, action_id: Action, user_id):
+        secure_hash = self.get_hash([action_id.value], user_id)
+        data = {"action_id": action_id.value, "hash": secure_hash}
 
         return self.fetch("streamQuiz.trackAction", data)
 
-    def send_answer(self, coins_answer, game_id, answer_id, question_id, user_id):
-        hash = self.get_hash([game_id, question_id], user_id)
+    def send_answer(self, *, coins_answer: bool, game_id, answer_id, question_id, user_id):
+        secure_hash = self.get_hash([game_id, question_id], user_id)
 
         data = {
             "answer_id": answer_id,
             "question_id": question_id,
             "device_id": self.device_id,
-            "hash": hash,
+            "hash": secure_hash,
         }
 
-        if coins_answer is True:
+        if coins_answer:
             data["coins_answer"] = True
 
         return self.fetch("streamQuiz.sendAnswer", data)
@@ -92,7 +96,7 @@ class BaseCleverApi():
         data = {"lat": lat, "lon": lon}
         return self.fetch("execute.getNearbyUsers", data)
 
-    def comment(self, owner_id, video_id, message):
+    def comment(self, *, owner_id, video_id, message):
         data = {
             "owner_id": owner_id,
             "video_id": video_id,
@@ -113,7 +117,10 @@ class CleverApi(BaseCleverApi):
                 "utf-8")
         })
 
-    def fetch(self, method, data={}):
+    def fetch(self, method, data=None):
+        if data is None:
+            data = {}
+
         data.update({
             "access_token": self.access_token,
             "v": self.api_version,
@@ -121,11 +128,12 @@ class CleverApi(BaseCleverApi):
             "https": 1
         })
 
-        content = self.session.post("https://api.vk.com/method/{}"
-                                    .format(method), data=data).json()
+        url = f"https://{self.api_host}/method/{method}"
+
+        content = self.session.post(url, data=data).json()
         error = content.get("error")
 
-        if error:
+        if error is not None:
             raise ApiResponseError(json.dumps(content))
 
         return content["response"]
@@ -137,7 +145,10 @@ class AsyncCleverApi(BaseCleverApi):
 
         self.connector = connector
 
-    async def fetch(self, method, data={}):
+    async def fetch(self, method, data=None):
+        if data is None:
+            data = {}
+        
         data.update({
             "access_token": self.access_token,
             "v": self.api_version,
@@ -145,13 +156,14 @@ class AsyncCleverApi(BaseCleverApi):
             "https": 1
         })
 
-        async with self.connector.session.post("https://api.vk.com/method/{}"
-            .format(method), data=data) as response:
+        url = f"https://{self.api_host}/method/{method}"
+
+        async with self.connector.session.post(url, data=data) as response:
 
             content = await response.json()
             error = content.get("error")
 
-            if error:
+            if error is not None:
                 raise ApiResponseError(json.dumps(content))
 
             return content["response"]
