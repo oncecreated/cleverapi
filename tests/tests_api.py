@@ -81,17 +81,17 @@ def test_hash_answer(base_api_with_ids):
 def test_send_action(base_api_with_ids):
     user_api = "91670994"
 
-    method, data = base_api_with_ids.send_action(Action.COMMUNITY_NOTIFY, user_api)
+    method, data = base_api_with_ids.send_action(action_id=Action.COMMUNITY_NOTIFY, user_id=user_api)
 
     assert method == "streamQuiz.trackAction"
     assert data == dict(action_id=6, hash=str('8cc151519e41f560bf93b02278413875#'
                 '5c75528a585768893d29c137b342057f#34f1d74e8991b6687a296f6a8c8c92a7'))
 
 
-def test_send_answer_for_money(base_api_with_ids):
+def test_send_answer_for_money(base_api_with_ids: CleverApi):
     user_api = "91670994"
 
-    method, data = base_api_with_ids.send_answer(False, 215, 0, 18, user_api)
+    method, data = base_api_with_ids.send_answer(coins_answer=False, game_id=215, answer_id=0, question_id=18, user_id=user_api)
 
     assert method == "streamQuiz.sendAnswer"
     assert data == dict(answer_id=0, question_id=18, device_id="77a3af1dbf002b1b", 
@@ -102,7 +102,7 @@ def test_send_answer_for_money(base_api_with_ids):
 def test_send_answer_for_coins(base_api_with_ids):
     user_api = "91670994"
 
-    method, data = base_api_with_ids.send_answer(True, 215, 0, 18, user_api)
+    method, data = base_api_with_ids.send_answer(coins_answer=True, game_id=215, answer_id=0, question_id=18, user_id=user_api)
 
     assert method == "streamQuiz.sendAnswer"
     assert data == dict(answer_id=0, question_id=18, device_id="77a3af1dbf002b1b", 

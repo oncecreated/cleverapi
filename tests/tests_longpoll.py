@@ -31,9 +31,9 @@ def test_clear_game_state(longpoll):
     longpoll.clear_game_state()
 
     assert longpoll.is_game == False
-    assert longpoll.game_id == 0
-    assert longpoll.owner_id == 0
-    assert longpoll.video_id == 0
+    assert longpoll.game_id == None
+    assert longpoll.owner_id == None
+    assert longpoll.video_id == None
 
 
 def test_init_game_state(longpoll):
