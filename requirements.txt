@@ -8,7 +8,7 @@ pytest == 3.6.2
 # build\lib\cleverapi\clever_api.py: 5
 # cleverapi\clever_api.py: 5
 # examples\like_friends.py: 5
-requests == 2.19.1
+requests == 2.20.0
 
 # setup.py: 2
 setuptools == 39.0.1
